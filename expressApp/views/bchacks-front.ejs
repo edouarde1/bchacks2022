@@ -71,7 +71,7 @@
       button:hover {
       opacity: 0.8;
       }
-      input[type=text], input[type=password] {
+      input[type=text], input[type=paragraph] {
       text-align:center;
       width: 500%;
       padding: 16px 8px;
@@ -113,7 +113,6 @@
         width: 35px;
         height: 35px;
         font-size: 0;
-        background-color: red;
         border: 0;
         border-radius: 35px;
         margin: 18px;
@@ -122,17 +121,12 @@
         margin-left: auto;
         margin-right: auto;
         }
+        .inline {
+        display:inline-block;
+        margin-right:5px;
+        }
 
-    .notRec{
-	background-color: darkred;
-    }
-
-    .Rec{
-	animation-name: pulse;
-	animation-duration: 1.5s;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear;
-    }   
+  
 
     @keyframes pulse{
         0%{
@@ -158,17 +152,11 @@
             <textarea id = "textBox" rows="40" cols="120"><%= saveText %></textarea>
             <input class="favorite styled" type="button" value="GO!" onclick="getScore()">
             <h2>Record Text:</h2>
-            <p>Click the button to start/stop recording</p>
-            <button class="recbutton" id="recButton" 
-            width: 35px;
-            height: 35px;
-            font-size: 0;
-            background-color: red;
-            border: 0;
-            border-radius: 35px;
-            margin: 18px;
-            outline: none;></button>
-
+            <p>Click the button to start recording</p>
+            <div>
+                <input type="button" onClick = "startRec()" class="inline" id="startRecButton" value="start">
+                <input type="button" onClick = "stopRec()" class="inline" id="stopRecButton" value ="stop"> 
+            </div>
             <p>Positivty Score: <%= score %></p>
             <div>
                 <h1 name="positivity score" id="score"></h1>
@@ -185,6 +173,22 @@
             body: JSON.stringify({ 'text': document.getElementById('textBox').value })
         }).then(function (res) {
             location.reload()
+        })
+    }
+    function startRec() {
+        fetch('/rec', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json;charset=utf-8' },
+            body: ""
+        }).then(function (res) {
+            location.reload()
+        })
+    }
+    function stopRec() {
+        fetch('/stopRec', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json;charset=utf-8' },
+            body: ""
         })
     }
 </script>

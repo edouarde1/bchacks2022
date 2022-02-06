@@ -3,6 +3,9 @@ const app = express()
 const bodyParser = require('body-parser');
 const {spawn} = require('child_process');
 
+recording = false;
+var pythonRec
+
 score = 0;
 saveText = "";
 
@@ -31,8 +34,30 @@ app.post('/calc', (req, res) => {
 })
 
 app.post('/rec', (req, res) => {
-	
-}
+	recording = true;
+	var pyOut;
+	console.log("recording")
+	pythonRec = spawn('python', ['real_time_speech.py']);
+	pythonRec.stdout.on('data', function (data){
+		pyOut += data.toString()
+		recText = data.toString()
+		console.log("line: "+data.toString())
+	});
+	pythonRec.on('exit', (code) => {
+		recText = pyOut.substring(9)
+		console.log("out: " + recText)
+		saveText = recText;
+		res.end()
+	});
+})
+
+app.post('/stopRec', (req, res) => {
+	if(recording){
+		pythonRec.kill('SIGTERM');
+		recording = false;
+		console.log("Killed");
+	}
+});
 
 exports.app = app
 

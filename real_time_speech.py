@@ -6,7 +6,7 @@ import asyncio
 import base64
 import json
 import time
-from configure import auth_key
+from expressApp.configure import auth_key
 
 FRAMES_PER_BUFFER = 3200
 FORMAT = pyaudio.paInt16

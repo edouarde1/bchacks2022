@@ -1,12 +1,14 @@
 from inspect import currentframe
 from signal import pthread_kill
+import sys
 import pyaudio
+
 import websockets
 import asyncio
 import base64
 import json
 import time
-from configure import auth_key
+auth_key = "44ec744d87d14fa584a38733996cc167"
 
 FRAMES_PER_BUFFER = 3200
 FORMAT = pyaudio.paInt16
@@ -28,7 +30,7 @@ URL = "wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000"
 file = open("words.txt",'w') 
 
 async def send_receive():
-    print(f'Connecting websocket to url ${URL}')
+    # print(f'Connecting websocket to url ${URL}')
     async with websockets.connect(
        URL,
        extra_headers=(("Authorization", auth_key),),
@@ -36,10 +38,10 @@ async def send_receive():
        ping_timeout=20
    ) as _ws:
        await asyncio.sleep(0.1)
-       print("Receiving SessionBegins ...")
+    #    print("Receiving SessionBegins ...")
        session_begins = await _ws.recv()
-       print(session_begins)
-       print("Sending messages ...")
+    #    print(session_begins)
+    #    print("Sending messages ...")
        async def send():
            while True:
                try:
@@ -48,7 +50,7 @@ async def send_receive():
                    json_data = json.dumps({"audio_data":str(data)})
                    await _ws.send(json_data)
                except websockets.exceptions.ConnectionClosedError as e:
-                   print(e)
+                #    print(e)
                    assert e.code == 4008
                    break
                except Exception as e:
@@ -61,10 +63,12 @@ async def send_receive():
                try:
                    result_str = await _ws.recv()
                    word = str(json.loads(result_str)['text'])
-                   print(word)
+                #    print(word)
                    if len(word) > 1 and word[-1] == '.':
+                        print(word.strip()+" ")
+                        sys.stdout.flush()
                         file.write(word.strip()+" ")
-                   print(json.loads(result_str)['text'])
+                #    print(json.loads(result_str)['text'])
                except websockets.exceptions.ConnectionClosedError as e:
                    print(e)
                    assert e.code == 4008
