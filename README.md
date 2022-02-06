@@ -24,9 +24,9 @@ We are very proud of Stu for brining his all into this project. He carried the t
 
 ## What we learned
 
-1)Learning how to use unknown development platforms is a lot of work 
-2) Changing your idea helps 
-3) Social Media APIs suck
+- Learning how to use unknown development platforms is a lot of work 
+- Changing your idea helps 
+- Social Media APIs suck
 
 ## What's next for Posimeter
 
