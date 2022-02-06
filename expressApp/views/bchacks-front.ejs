@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<style>
+    html, body {
+    min-height: 100%; 
+    justify-content: center;
+    }
+    body, div, form, input, select, p { 
+    padding: 0;
+    margin: 0;
+    outline: none;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 16px;
+    color: #eee;
+    }
+    body {
+    background: linear-gradient(-45deg, #0011ff, #0ed4a9, #0927d4, #09f7947c);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+    0% {
+    background-position: 0% 50%;
+    }
+    50% {
+    background-position: 100% 50%;
+    }
+    100% {
+    background-position: 0% 50%;
+    }
+    }
+    h1 {
+    font-weight: 300; 
+    font-size: 40px ;
+    font-family:Arial; 
+    }
+    h2 { 
+    text-align:center;
+    font-weight: 400;
+    margin: 0 0 0 8px; 
+    font-weight: bold;
+    }
+    .main-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 25px;
+    background: rgba(154, 216, 235, 0.5); 
+    }
+    .left-part, form {
+    padding: 25px;
+    }
+    .left-part {
+    text-align: center;
+    }
+    .fa-graduation-cap {
+    font-size: 72px;
+    }
+    button {
+      background-color: #000000;
+      color: white;
+      padding: 14px 0;
+      margin: 10px 0;
+      border: none;
+      cursor: grab;
+      width: 28%;
+      
+      }
+      button:hover {
+      opacity: 0.8;
+      }
+      input[type=text], input[type=password] {
+      text-align:center;
+      width: 500%;
+      padding: 16px 8px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      }
+      input[type=button]{ 
+      background-color: #000000;
+      color: white;
+      padding: 14px 0;
+      margin: 10px 0;
+      border: none;
+      cursor: grab;
+      width: 28%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      }
+      input[type=button]:hover {
+      opacity: 0.6;
+      } 
+      h1 {
+      text-align:center;
+      font-size:18;
+      }
+      textarea {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        }   
+        * {box-sizing:border-box}
+       p{
+           font-size: 20px;
+        text-align:center;
+       }
+       button {
+        width: 35px;
+        height: 35px;
+        font-size: 0;
+        background-color: red;
+        border: 0;
+        border-radius: 35px;
+        margin: 18px;
+        outline: none;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        }
+
+    .notRec{
+	background-color: darkred;
+    }
+
+    .Rec{
+	animation-name: pulse;
+	animation-duration: 1.5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+    }   
+
+    @keyframes pulse{
+        0%{
+            box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);
+        }
+        65%{
+            box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);
+        }
+        90%{
+            box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);
+        }
+    }
+</style>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PosiMeter</title>
+    <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+    <body>
+            <h1><strong>Enter Some Text:</strong></h1>
+            <textarea id = "textBox" rows="40" cols="120"><%= saveText %></textarea>
+            <input class="favorite styled" type="button" value="GO!" onclick="getScore()">
+            <h2>Record Text:</h2>
+            <p>Click the button to start/stop recording</p>
+            <button class="recbutton" id="recButton" 
+            width: 35px;
+            height: 35px;
+            font-size: 0;
+            background-color: red;
+            border: 0;
+            border-radius: 35px;
+            margin: 18px;
+            outline: none;></button>
+
+            <p>Positivty Score: <%= score %></p>
+            <div>
+                <h1 name="positivity score" id="score"></h1>
+            </div>
+          </div>
+      <script type="text/javascript">(function(){window['__CF$cv$params']={r:'6d93c6be598061f3',m:'bzAzOTzUfsGBFVhCwZ6zi9RlkBYhSpVtuyvB8DQ3nTo-1644144194-0-AVVboikJRQ7eoPbFugfgkEFKomcY07IYFOSsyS4udbcSAA1HCZqL81gDmG74tEbwFv6dqYPtAeU92FxWm0WZYpAt2Smq0qgS/uqJmbJo+CutxmJHo6x0uOh7K/3SFN0SKmjvUuqeztm00YvbChW2EENchsLQjTZ1OgCqyBVcB5Px9Fd3wLsgEpbG85jAgekxhqASg1sLmeBkyed2kLtpQE0=',s:[0x0a79b7bf1c,0x5c9432f298],}})();</script></body>
+    </html>
+</html>
+<script>
+    function getScore() {
+        fetch('/calc', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json;charset=utf-8' },
+            body: JSON.stringify({ 'text': document.getElementById('textBox').value })
+        }).then(function (res) {
+            location.reload()
+        })
+    }
+</script>

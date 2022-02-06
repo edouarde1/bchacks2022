@@ -1,0 +1,19 @@
+<h1>Test</h1>
+<h3>
+	Score:
+	<span ><%= score %></span>
+</h3>
+<input type="text" id="textBox" size = '100' rows='100' value="<%= saveText %>">
+<button onclick="getScore()">click!</button>
+<script>
+	function getScore() {
+		console.log('test')
+		fetch('/calc', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json;charset=utf-8' },
+			body: JSON.stringify({ 'text' : document.getElementById('textBox').value })
+		}).then(function (res) {
+			location.reload()
+		})
+	}
+</script>
