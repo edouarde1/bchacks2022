@@ -14,6 +14,9 @@ The conversation recording function was developed using the AssemblyAI API for p
 
 In another python file we built our positivity score. We did this by creating a state of the art algorithm which calculates the positivity of a specified text. The algorithm is P = (numPosWords - numNegWords)/sqrt(totalWords). We found this algorithm to not only be extremely effective, but beautifully simple. The voice to speech python file is run directly from Node.js using express.
 
+## Live Demo 
+https://devpost.com/software/posimeter
+
 ## Challenges we ran into
 
 We ran into many challenges during this project. Our first challenge was trying to figure out how to use APIs that we had little experience using. In our original project idea we wanted to make a project that would make social media apps such as Instagram more accessible to seniors. Although we quickly ran into issues with permission issues with the social media APIs. In another project idea we wanted to monitor ski lift traffic using live location data from users. We spent a long time researching how to do this and tried testing location code in lots of environments. At one point we can to the census that cross-platform geocoordinates are not each to deal with when trying to run them in the background. Finally, the last challenge was finding an idea that was feasible and interesting for our group to accomplish. This last challenge was one we overcame when we came up with posimeter.
